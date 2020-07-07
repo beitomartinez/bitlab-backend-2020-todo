@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class TaskController extends Controller
+class CategoryController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -13,7 +13,7 @@ class TaskController extends Controller
      */
     public function index()
     {
-        //
+        return view('categories.index');
     }
 
     /**
@@ -23,7 +23,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        //
+        return view('categories.create');
     }
 
     /**
@@ -34,7 +34,7 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return "Se almacenó la categoría con nombre: $request->name";
     }
 
     /**
@@ -45,7 +45,10 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        return "Si estás aquí, es porque el id es $id";
+        return view(
+            'categories.show',
+            ['categoryId' => $id]
+        );
     }
 
     /**
@@ -56,7 +59,10 @@ class TaskController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view(
+            'categories.edit',
+            ['categoryId' => $id]
+        );
     }
 
     /**
@@ -68,7 +74,12 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+
+        return $request->method();
+
+
+        return "Aquí se recibe el form para editar la categoría con ID $id y "
+            . " se actualiza";
     }
 
     /**
@@ -79,6 +90,6 @@ class TaskController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return "Aquí se destruye la categoría con id $id";
     }
 }

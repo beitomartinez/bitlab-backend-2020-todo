@@ -8,6 +8,5 @@
 </head>
 <body>
   <h1>Tarea guardada con éxito</h1>
-  
 </body>
 </html>

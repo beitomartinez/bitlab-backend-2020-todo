@@ -2,11 +2,9 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/', 'welcome');
 
+Route::get('tasks/status', 'TaskStatusController');
 
-Route::view('tasks/create', 'tasks.create');
-Route::post('tasks/store', 'TaskController@store')->name('tasks.store');
-Route::view('tasks/stored', 'tasks.stored');
+Route::resource('tasks', 'TaskController');
+Route::resource('categories', 'CategoryController');
