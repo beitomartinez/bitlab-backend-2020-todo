@@ -10,7 +10,6 @@
     <h1>Editar categoría</h1>
     <p>Completa correctamente el formulario para actualizar la categoría, con ID: <?php echo $categoryId ?></p>
 
-
     <form action="{{ route('categories.update', $categoryId) }}" method="POST">
       @csrf
       <input type="hidden" name="_method" value="PUT">

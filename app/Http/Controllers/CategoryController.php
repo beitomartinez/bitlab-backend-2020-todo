@@ -34,7 +34,14 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        return "Se almacenó la categoría con nombre: $request->name";
+        // return "Se almacenó la categoría con nombre: $request->name";
+
+        // AQUI VAN LOS PROCESOS PARA ALMACENAR EN LA DB
+
+        return redirect()
+            ->action('CategoryController@create')
+            ->withInput()
+            ->with('error', true);
     }
 
     /**
@@ -43,8 +50,11 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
+        print_r($request->all());
+        die();
+
         return view(
             'categories.show',
             ['categoryId' => $id]
