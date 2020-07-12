@@ -8,8 +8,8 @@
   </head>
   <body>
     <h1>Resultados</h1>
-    @forelse ($list as $k => $item)
-    <p>La fruta el índice {{ "$k es: $item" }}</p>
+    @forelse ($list as $item)
+    <p>La fruta el índice {{ "{$loop->index} es: $item" }}</p>
     @empty
     <p>No hay elementos en el listado :(</p>
     @endforelse

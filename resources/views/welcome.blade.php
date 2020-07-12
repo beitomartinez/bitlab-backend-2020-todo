@@ -10,10 +10,5 @@
     <h1>Página de inicio</h1>
     <p>Esta es una aplicación web para llevar el control de mis tareas por hacer</p>
     <p><a href="{{ route('categories.index') }}">Ir al índice de categorías</a></p>
-
-    <?php echo 'hola'; ?>
-    hola Gabriel, cómo estás
-    <?php echo 'adiós'; ?>
-
 </body>
 </html>
