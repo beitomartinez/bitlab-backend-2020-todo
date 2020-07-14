@@ -1,14 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Tareas por hacer</title>
-</head>
-<body>
-    <h1>Página de inicio</h1>
-    <p>Esta es una aplicación web para llevar el control de mis tareas por hacer</p>
-    <p><a href="{{ route('categories.index') }}">Ir al índice de categorías</a></p>
-</body>
-</html>
+@extends('layouts.main')
+
+@section('pageTitle', 'Página de inicio')
+
+@section('content')
+<h1 class="text-2xl font-bold">Página de inicio</h1>
+<p>Esta es una aplicación web para llevar el control de mis tareas por hacer</p>
+<p class="mb-4">@include('partials.ui.button', ['label' => 'Ver listado de categorías', 'url' => route('categories.index')])</p>
+
+@include('partials.tasks.pending', ['message' => 'No olvides, que tienes estas tareas pendientes:'])
+@endsection
+
+@section('scripts')
+{{-- <script src="{{ asset('js/say-hi.js') }}"></script> --}}
+@endsection
