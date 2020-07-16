@@ -13,7 +13,15 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return view('categories.index');
+        $categories = [
+            ['De la casa', 3, 2],
+            ['Del trabajo', 6, 4],
+            ['Personales', 7, 1],
+            ['Bitlab', 9, 5],
+            ['Familiares', 12, 2],
+        ];
+
+        return view('categories.index', compact('categories'));
     }
 
     /**
@@ -52,13 +60,25 @@ class CategoryController extends Controller
      */
     public function show(Request $request, $id)
     {
-        print_r($request->all());
-        die();
+        $category = [
+            'name' => 'Personales',
+            'description' => 'Tareas personales de mi persona que quiero hacer para mi',
+            'tasks_total' => 23,
+            'tasks_completed' => 11,
+            'tasks_uncompleted' => 12,
+            'created_at' => 'Octubre 28'
+        ];
 
-        return view(
-            'categories.show',
-            ['categoryId' => $id]
-        );
+        $tasks = [
+            'Practicar guitarra',
+            'Leer el libro que tengo pendiente',
+            'Descansar al mediodía',
+            'Hacer ejericicio por la mañana',
+            'Tomar suficiente agua',
+            'No desvelarme',
+        ];
+
+        return view('categories.show', compact('category', 'tasks'));
     }
 
     /**
