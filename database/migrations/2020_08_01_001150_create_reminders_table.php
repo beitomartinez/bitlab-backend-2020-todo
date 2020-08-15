@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateFailedJobsTable extends Migration
+class CreateRemindersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -14,14 +14,16 @@ class CreateFailedJobsTable extends Migration
     public function up()
     {
         Schema::create(
-            'failed_jobs',
+            'reminders',
             function (Blueprint $table) {
                 $table->id();
-                $table->text('connection');
-                $table->text('queue');
-                $table->longText('payload');
-                $table->longText('exception');
-                $table->timestamp('failed_at')->useCurrent();
+                $table->string('message', 100);
+                $table->time('repeat_at')->nullable();
+                $table->unsignedBigInteger('task_id')->index();
+                $table->dateTime('starts_at')->index();
+                $table->timestamp('updated_at');
+
+                $table->foreign('task_id')->references('id')->on('tasks');
             }
         );
     }
@@ -33,6 +35,6 @@ class CreateFailedJobsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('failed_jobs');
+        Schema::dropIfExists('reminders');
     }
 }
