@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoryController extends Controller
@@ -42,14 +43,24 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        // return "Se almacenó la categoría con nombre: $request->name";
+        // OPCION 1
+        // $newCategory = new Category();
+        // $newCategory->name = $request->name;
+        // $newCategory->description = $request->description;
+        // $newCategory->color = $request->color;
+        // $newCategory->save();
 
-        // AQUI VAN LOS PROCESOS PARA ALMACENAR EN LA DB
+        // OPCION 2
+        // $newCategory = Category::create([
+        //     'name' => $request->name,
+        //     'description' => $request->description,
+        //     'color' => $request->color
+        // ]);
+        
+        Category::create($request->all());
 
-        return redirect()
-            ->action('CategoryController@create')
-            ->withInput()
-            ->with('error', true);
+        $request->session()->flash('cat_stored', true);
+        return redirect()->route('categories.index');
     }
 
     /**

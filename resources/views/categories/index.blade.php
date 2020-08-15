@@ -3,6 +3,11 @@
 @section('pageTitle', 'Índice de categorías')
 
 @section('content')
+
+@if (session('cat_stored'))
+<div class="border border-green-500 p-1 text-center text-green-500">Categoría almacenada con éxito</div>
+@endif
+
 <h1 class="text-2xl font-bold">Índice de categorías</h1>
 <p class="mb-2">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat ab quidem maxime? Corrupti, magni cum?</p>
 <p class="mb-8">@include('partials.ui.button', ['label' => 'Crear categoría', 'url' => route('categories.create')])</p>

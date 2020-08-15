@@ -16,14 +16,14 @@ if (session('error')) {
   @csrf
 
   <p>Nombre de la categoría</p>
-  <input type="text" name="name" value="<?php echo old('name', 'Bitlab') ?>" placeholder="nombre de categoría">
+  <input type="text" name="name" value="<?php echo old('name') ?>" placeholder="Nombre de categoría" class="border">
   
   <p>Descripción de la categoría</p>
-  <textarea name="description" rows="5"><?php echo old('description') ?></textarea>
+  <textarea name="description" rows="5" class="border"><?php echo old('description') ?></textarea>
   
-  <p>Responsable</p>
-  <input type="text" name="user" value="<?php echo old('user') ?>">
+  <p>Color</p>
+  <input type="text" name="color" value="<?php echo old('color') ?>" class="border">
 
-  <button>Guardar</button>
+  <p class="mt-4"><button class="bg-blue-500 text-white p-2">Guardar</button></p>
 </form>
 @endsection
