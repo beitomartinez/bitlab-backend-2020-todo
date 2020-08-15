@@ -76,10 +76,8 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        return view(
-            'categories.edit',
-            ['categoryId' => $id]
-        );
+        $category = Category::findOrFail($id);
+        return view('categories.edit', compact('category'));
     }
 
     /**
@@ -91,12 +89,18 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $category = Category::findOrFail($id);
 
-        return $request->method();
+        // OPCION 1
+        // $category->name = $request->name;
+        // $category->description = $request->description;
+        // $category->color = $request->color;
+        // $category->save();
 
+        $category->update($request->all());
 
-        return "Aquí se recibe el form para editar la categoría con ID $id y "
-            . " se actualiza";
+        $request->session()->flash('cat_updated', true);
+        return redirect()->route('categories.show', $category->id);
     }
 
     /**
