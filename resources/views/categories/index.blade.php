@@ -15,7 +15,7 @@
 <h2 class="text-xl font-bold">Listado</h2>
 <ol class="list-decimal ml-8">
   @foreach($categories as $category)
-  <li><a href="{{ route('categories.show', $loop->iteration) }}" class="text-blue-500 hover:underline">{{ $category[0] }}</a> ({{ $category[1] }} tareas sin completar | {{ $category[2] }} tareas completadas)</li>
+  <li><a href="{{ route('categories.show', $category->id) }}" class="text-blue-500 hover:underline">{{ $category->name }}</a></li>
   @endforeach
 </ol>
 @endsection
