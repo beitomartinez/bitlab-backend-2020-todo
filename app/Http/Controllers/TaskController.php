@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Task;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class TaskController extends Controller
@@ -72,7 +73,11 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        return "Si estás aquí, es porque se creó la tarea con  id: $id";
+        $task = Task::findOrFail($id); // --- PENDIENTE: VALIDAR USUARIO
+        $category = Category::find($task->category_id);
+        $user = User::find($task->created_by);
+        
+        return view('tasks.show', compact('task', 'category', 'user'));
     }
 
     /**
