@@ -2,7 +2,8 @@
 
 @section('content')
 <h1 class="text-2xl font-bold">Tareas</h1>
-<p class="mb-8">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet aliquid dolorem illum tenetur porro nisi quibusdam, qui reiciendis molestiae distinctio maxime hic blanditiis optio ipsum cupiditate, facere, modi facilis quas?</p>
+<p class="mb-2">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet aliquid dolorem illum tenetur porro nisi quibusdam, qui reiciendis molestiae distinctio maxime hic blanditiis optio ipsum cupiditate, facere, modi facilis quas?</p>
+<p class="mb-8">@include('partials.ui.button', ['label' => 'Crear tarea', 'url' => route('tasks.create')])</p>
 
 <h2 class="text-xl font-bold">Listado de tareas</h2>
 @if (count($tasks) == 0)
