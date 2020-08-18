@@ -62,7 +62,6 @@ class TaskController extends Controller
         $myNewTask->save();
 
         return redirect()->route('tasks.show', $myNewTask->id);
-
     }
 
     /**

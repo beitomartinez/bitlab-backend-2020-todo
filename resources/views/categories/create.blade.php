@@ -12,17 +12,28 @@ if (session('error')) {
 }
 ?>
 
-<form action="{{ route('categories.store') }}" method="POST">
+<form action="{{ route('categories.store') }}" method="POST" enctype="multipart/form-data">
   @csrf
 
-  <p>Nombre de la categoría</p>
-  <input type="text" name="name" value="<?php echo old('name') ?>" placeholder="Nombre de categoría" class="border">
+  <div class="mb-2">
+    <p>Nombre de la categoría</p>
+    <input type="text" name="name" value="<?php echo old('name') ?>" placeholder="Nombre de categoría" class="border">
+  </div>
   
-  <p>Descripción de la categoría</p>
-  <textarea name="description" rows="5" class="border"><?php echo old('description') ?></textarea>
+  <div class="mb-2">
+    <p>Descripción de la categoría</p>
+    <textarea name="description" rows="5" class="border"><?php echo old('description') ?></textarea>
+  </div>
   
-  <p>Color</p>
-  <input type="text" name="color" value="<?php echo old('color') ?>" class="border">
+  <div class="mb-2">
+    <p>Imagen</p>
+    <input type="file" name="image" class="border" accept="image/*">
+  </div>
+
+  <div class="mb-2">
+    <p>Color</p>
+    <input type="text" name="color" value="<?php echo old('color') ?>" class="border">
+  </div>
 
   <p class="mt-4"><button class="bg-blue-500 text-white p-2">Guardar</button></p>
 </form>

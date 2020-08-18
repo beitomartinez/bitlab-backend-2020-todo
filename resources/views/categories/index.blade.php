@@ -20,10 +20,16 @@
 @if (count($categories) == 0)
 <p>No hay categorías aún</p>
 @else
-<ol class="list-decimal ml-8">
+
+<div class="flex flex-row flex-wrap text-center">
   @foreach($categories as $category)
-  <li><a href="{{ route('categories.show', $category->id) }}" class="text-blue-500 hover:underline">{{ $category->name }}</a></li>
+  <div class="w-1/2 md:w-1/3 lg:w-1/4 p-2 border">
+    @if (!is_null($category->image))
+    <img src="{{ asset("storage/categories-images/{$category->image}") }}" class="mb-4">
+    @endif
+    <a href="{{ route('categories.show', $category->id) }}" class="text-blue-500 hover:underline">{{ $category->name }}</a>
+  </div>
   @endforeach
-</ol>
+</div>
 @endif
 @endsection
