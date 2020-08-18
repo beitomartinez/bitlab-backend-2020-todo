@@ -17,7 +17,6 @@
 <p class="mb-8">@include('partials.ui.button', ['label' => 'Crear categoría', 'url' => route('categories.create')])</p>
 
 <h2 class="text-xl font-bold">Listado</h2>
-
 @if (count($categories) == 0)
 <p>No hay categorías aún</p>
 @else
