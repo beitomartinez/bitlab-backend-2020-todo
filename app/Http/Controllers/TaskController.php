@@ -38,7 +38,30 @@ class TaskController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // $request->only([..]) equivale a:
+        // [
+        //     'name' => $request->name,
+        //     'description' => $request->description,
+        //     'level' => $request->level,
+        //     'complete_date' => $request->complete_date,
+        // ]
+
+        Category::findOrFail($request->category_id);
+
+        $myNewTask = new Task($request->only([
+            'name',
+            'description',
+            'level',
+            'complete_date'
+        ]));
+
+        $myNewTask->created_by = 2; // auth()->user()->id
+        $myNewTask->category_id = $request->category_id;
+
+        $myNewTask->save();
+
+        return redirect()->route('tasks.show', $myNewTask->id);
+
     }
 
     /**
@@ -49,7 +72,7 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        return "Si estás aquí, es porque el id es $id";
+        return "Si estás aquí, es porque se creó la tarea con  id: $id";
     }
 
     /**

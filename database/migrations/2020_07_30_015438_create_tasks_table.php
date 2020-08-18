@@ -23,7 +23,7 @@ class CreateTasksTable extends Migration
                 $table->tinyInteger('level')->default(0);
                 $table->tinyInteger('state')->default(0)->index();
                 $table->unsignedBigInteger('created_by')->index();
-                $table->timestamp('completed_at');
+                $table->timestamp('completed_at')->nullable();
                 $table->dateTime('complete_date')->index();
                 $table->timestamps();
 
