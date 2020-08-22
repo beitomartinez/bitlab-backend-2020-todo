@@ -14,6 +14,7 @@
 <p class="mb-8"><strong>Creado el:</strong> {{ $category->created_at->formatLocalized('%b %d, %Y %I:%M %p') }}</p>
 
 <p class="mb-8"><a href="{{ route('categories.edit', $category->id) }}" class="text-blue-500 underline">Actualizar categoría</a></p>
+<p class="mb-8"><a href="{{ route('categories.show-completed', $category->id) }}" class="text-blue-500 underline">Ver tareas terminadas</a></p>
 
 <form action="{{ route('categories.destroy', $category->id) }}" method="POST" class="mb-4" onsubmit="return confirm('¿Realmente quieres eliminar esta categoría?');">
   @csrf
@@ -22,5 +23,9 @@
 </form>
 
 <h2 class="text-xl font-bold mb-4">Tareas de esta categoría:</h2>
-<p>Pendiente...</p>
+<ul class="list-disc ml-6">
+  @foreach ($category->tasks as $task)
+  <li><a href="{{ route('tasks.show', $task->id) }}" class="underline text-blue-500">{{ $task->name }}</a> ({{ $task->user->name }})</li>
+  @endforeach
+</ul>
 @endsection

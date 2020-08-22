@@ -15,7 +15,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::select('id', 'name', 'description', 'image')->get();
+        $categories = Category::select('id', 'name', 'description', 'image')
+            ->withCount('tasks')->get();
+
         return view('categories.index', compact('categories'));
     }
 
@@ -72,8 +74,25 @@ class CategoryController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $category = Category::findOrFail($id);
+        $category = Category::with(
+            'tasks:id,name,category_id,created_by',
+            'tasks.user:id,name',
+            // 'tasks.user'
+        )->findOrFail($id);
         return view('categories.show', compact('category'));
+    }
+
+    public function showCompletedTasks (Request $request, $id)
+    {
+        // $category = Category::with([
+        //     'tasks' => function ($query) {
+        //         $query->where('state', 2);
+        //     }
+        // ])->findOrFail($id);
+        
+        $category = Category::with('completedTasks')->findOrFail($id);
+
+        return view('categories.show-completed', compact('category'));
     }
 
     /**

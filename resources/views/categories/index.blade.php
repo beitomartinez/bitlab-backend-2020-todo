@@ -27,7 +27,7 @@
     @if (!is_null($category->image))
     <img src="{{ asset("storage/categories-images/{$category->image}") }}" class="mb-4">
     @endif
-    <a href="{{ route('categories.show', $category->id) }}" class="text-blue-500 hover:underline">{{ $category->name }}</a>
+    <a href="{{ route('categories.show', $category->id) }}" class="text-blue-500 hover:underline">{{ $category->name }} ({{ $category->tasks_count }} tareas)</a>
   </div>
   @endforeach
 </div>

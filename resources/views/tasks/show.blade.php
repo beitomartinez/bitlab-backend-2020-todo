@@ -13,7 +13,7 @@
 <p class="mb-2"><strong>Se completó el:</strong> {{ $task->completed_at }}</p>
 @endif
 
-<p class="mb-2"><strong>Categoría:</strong> {{ $category->name }}</p>
-<p class="mb-2"><strong>Creado:</strong> {{ $user->name }}</p>
+<p class="mb-2"><strong>Categoría:</strong> <a href="{{ route('categories.show', $task->category->id) }}" class="underline text-blue-500">{{ $task->category->name }}</a></p>
+<p class="mb-2"><strong>Creado:</strong> {{ $task->user->name }}</p>
 
 @endsection

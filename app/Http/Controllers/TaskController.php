@@ -73,10 +73,8 @@ class TaskController extends Controller
     public function show($id)
     {
         $task = Task::findOrFail($id); // --- PENDIENTE: VALIDAR USUARIO
-        $category = Category::find($task->category_id);
-        $user = User::find($task->created_by);
         
-        return view('tasks.show', compact('task', 'category', 'user'));
+        return view('tasks.show', compact('task'));
     }
 
     /**
