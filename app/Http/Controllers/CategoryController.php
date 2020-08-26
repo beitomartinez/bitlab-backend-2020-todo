@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -15,8 +16,11 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::select('id', 'name', 'description', 'image')
-            ->withCount('tasks')->get();
+        $categories = Category::where('user_id', 2)->select(
+            'id', 'name', 'description', 'image'
+        )->withCount(
+            'tasks', 'pendingTasks', 'processingTasks', 'completedTasks'
+        )->get();
 
         return view('categories.index', compact('categories'));
     }
@@ -37,7 +41,7 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CategoryRequest $request)
     {
         // OPCION 1
         // $newCategory = new Category();
@@ -60,6 +64,9 @@ class CategoryController extends Controller
         $newCategory->image = basename(
             Storage::put('categories-images', $request->image)
         );
+
+        $newCategory->user_id = 2;
+
         $newCategory->save();
 
         $request->session()->flash('cat_stored', true);
@@ -74,11 +81,12 @@ class CategoryController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $category = Category::with(
-            'tasks:id,name,category_id,created_by',
+        $category = Category::where('user_id', 2)->with(
+            'tasks',
             'tasks.user:id,name',
             // 'tasks.user'
         )->findOrFail($id);
+
         return view('categories.show', compact('category'));
     }
 
@@ -90,7 +98,8 @@ class CategoryController extends Controller
         //     }
         // ])->findOrFail($id);
         
-        $category = Category::with('completedTasks')->findOrFail($id);
+        $category = Category::where('user_id', 2)->with('completedTasks')
+            ->findOrFail($id);
 
         return view('categories.show-completed', compact('category'));
     }
@@ -103,7 +112,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::findOrFail($id);
+        $category = Category::where('user_id', 2)->findOrFail($id);
         return view('categories.edit', compact('category'));
     }
 
@@ -116,7 +125,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = Category::findOrFail($id);
+        $category = Category::where('user_id', 2)->findOrFail($id);
 
         // OPCION 1
         // $category->name = $request->name;
@@ -147,11 +156,11 @@ class CategoryController extends Controller
     public function destroy(Request $request, $id)
     {
         // OPCION 1
-        // $category = Category::findOrFail($id);
-        // $category->delete();
+        $category = Category::where('user_id', 2)->findOrFail($id);
+        $category->delete();
 
         // OPCION 2
-        Category::destroy($id);
+        // Category::destroy($id);
 
         $request->session()->flash('cat_destroyed', true);
         return redirect()->route('categories.index');

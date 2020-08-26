@@ -6,6 +6,12 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>ToDoApp | @yield('pageTitle', 'Bienvenidos')</title>
     <link href="{{ asset('css/my-tailwind.css') }}" rel="stylesheet">
+    <style>
+      .bordered-table td {
+        padding: 3px;
+        border: solid 1px #c8c8c8;
+      }
+    </style>
   </head>
   <body>
     <div class="container mx-auto">

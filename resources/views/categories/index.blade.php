@@ -14,22 +14,31 @@
 
 <h1 class="text-2xl font-bold">Índice de categorías</h1>
 <p class="mb-2">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Quaerat ab quidem maxime? Corrupti, magni cum?</p>
-<p class="mb-8">@include('partials.ui.button', ['label' => 'Crear categoría', 'url' => route('categories.create')])</p>
+<p class="mb-8">@include('partials.ui.link', ['label' => 'Crear categoría', 'url' => route('categories.create')])</p>
 
 <h2 class="text-xl font-bold">Listado</h2>
 @if (count($categories) == 0)
 <p>No hay categorías aún</p>
 @else
 
-<div class="flex flex-row flex-wrap text-center">
+<table class="w-full bordered-table">
+  <tr>
+    <td class="font-bold" colspan="2">Categoría</td>
+    <td class="font-bold text-center">No. de tareas pendientes</td>
+    <td class="font-bold text-center">No. de tareas en curso</td>
+    <td class="font-bold text-center">No. de tareas completadas</td>
+    <td class="font-bold text-center">Total de tareas</td>
+  </tr>
   @foreach($categories as $category)
-  <div class="w-1/2 md:w-1/3 lg:w-1/4 p-2 border">
-    @if (!is_null($category->image))
-    <img src="{{ asset("storage/categories-images/{$category->image}") }}" class="mb-4">
-    @endif
-    <a href="{{ route('categories.show', $category->id) }}" class="text-blue-500 hover:underline">{{ $category->name }} ({{ $category->tasks_count }} tareas)</a>
-  </div>
+  <tr>
+    <td class="w-20"><a href="{{ route('categories.show', $category->id) }}" class="text-blue-500 hover:underline"><img src="{{ asset("storage/categories-images/{$category->image}") }}"></a></td>
+    <td><a href="{{ route('categories.show', $category->id) }}" class="text-blue-500 hover:underline">{{ $category->name }}</a></td>
+    <td class="text-center">{{ $category->pending_tasks_count }}</td>
+    <td class="text-center">{{ $category->processing_tasks_count }}</td>
+    <td class="text-center">{{ $category->completed_tasks_count }}</td>
+    <td class="text-center">{{ $category->tasks_count }}</td>
+  </tr>
   @endforeach
-</div>
+</table>
 @endif
 @endsection

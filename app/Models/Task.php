@@ -45,6 +45,30 @@ class Task extends Model
         }
     }
 
+    public function isDueSoon() : bool
+    {
+        $output = false;
+        if ($this->state < 2) {
+            if ($this->complete_date->diffInDays() <= 3) {
+                $output = true;
+            }
+        }
+
+        return $output;
+    }
+    
+    public function isPastDue() : bool
+    {
+        $output = false;
+        if ($this->state < 2) {
+            if (now()->gt($this->complete_date)) {
+                $output = true;
+            }
+        }
+
+        return $output;
+    }
+
     // RELATIONSHIPS
     
     public function category()
