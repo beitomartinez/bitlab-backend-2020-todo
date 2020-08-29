@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        $categories = Category::where('user_id', 2)->select(
+        $categories = Category::where('user_id', auth()->id())->select(
             'id', 'name', 'description', 'image'
         )->withCount(
             'tasks', 'pendingTasks', 'processingTasks', 'completedTasks'
@@ -65,7 +65,7 @@ class CategoryController extends Controller
             Storage::put('categories-images', $request->image)
         );
 
-        $newCategory->user_id = 2;
+        $newCategory->user_id = auth()->id();
 
         $newCategory->save();
 
@@ -81,7 +81,7 @@ class CategoryController extends Controller
      */
     public function show(Request $request, $id)
     {
-        $category = Category::where('user_id', 2)->with(
+        $category = Category::where('user_id', auth()->id())->with(
             'tasks',
             'tasks.user:id,name',
             // 'tasks.user'
@@ -98,7 +98,7 @@ class CategoryController extends Controller
         //     }
         // ])->findOrFail($id);
         
-        $category = Category::where('user_id', 2)->with('completedTasks')
+        $category = Category::where('user_id', auth()->id())->with('completedTasks')
             ->findOrFail($id);
 
         return view('categories.show-completed', compact('category'));
@@ -112,7 +112,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::where('user_id', 2)->findOrFail($id);
+        $category = Category::where('user_id', auth()->id())->findOrFail($id);
         return view('categories.edit', compact('category'));
     }
 
@@ -125,7 +125,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $category = Category::where('user_id', 2)->findOrFail($id);
+        $category = Category::where('user_id', auth()->id())->findOrFail($id);
 
         // OPCION 1
         // $category->name = $request->name;
@@ -156,7 +156,7 @@ class CategoryController extends Controller
     public function destroy(Request $request, $id)
     {
         // OPCION 1
-        $category = Category::where('user_id', 2)->findOrFail($id);
+        $category = Category::where('user_id', auth()->id())->findOrFail($id);
         $category->delete();
 
         // OPCION 2
