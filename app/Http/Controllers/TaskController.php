@@ -14,10 +14,37 @@ class TaskController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tasks = Task::get();
-        return view('tasks.index', compact('tasks'));
+        $query = Task::where('created_by', auth()->id())->with('category');
+
+        if (!is_null($request->keyword)) {
+            $query->where('name', 'LIKE', "%{$request->keyword}%")
+                ->orWhere('description', 'LIKE', "%{$request->keyword}%");
+        }
+
+        if (!is_null($request->category_id)) {
+            $query->where('category_id', $request->category_id);
+        }
+        
+        if (!is_null($request->level)) {
+            $query->where('level', $request->level);
+        }
+        
+        if (!is_null($request->starts)) {
+            $query->whereRaw("DATE(complete_date) >= '{$request->starts}'");
+        }
+        
+        if (!is_null($request->ends)) {
+            $query->whereRaw("DATE(complete_date) <= '{$request->ends}'");
+        }
+        
+        $tasks = $query->get();
+        // $tasks = $query->paginate(1);
+
+
+        $categories = Category::where('user_id', auth()->id())->get();
+        return view('tasks.index', compact('tasks', 'categories'));
     }
 
     /**
@@ -27,7 +54,7 @@ class TaskController extends Controller
      */
     public function create()
     {
-        $categories = Category::get();
+        $categories = Category::where('user_id', auth()->id())->get();
         return view('tasks.create', compact('categories'));
     }
 
@@ -56,7 +83,7 @@ class TaskController extends Controller
             'complete_date'
         ]));
 
-        $myNewTask->created_by = 2; // auth()->user()->id
+        $myNewTask->created_by = auth()->id();
         $myNewTask->category_id = $request->category_id;
 
         $myNewTask->save();
@@ -72,7 +99,7 @@ class TaskController extends Controller
      */
     public function show($id)
     {
-        $task = Task::findOrFail($id); // --- PENDIENTE: VALIDAR USUARIO
+        $task = Task::where('created_by', auth()->id())->findOrFail($id);
         
         return view('tasks.show', compact('task'));
     }

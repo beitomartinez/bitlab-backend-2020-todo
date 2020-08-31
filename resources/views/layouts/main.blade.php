@@ -65,6 +65,7 @@
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
       flatpickr("#complete_date", { enableTime: true, minDate: 'today' });
+      flatpickr(".range-picker", { mode: 'range' });
       flatpickr(".datepicker");
     </script>
   </body>

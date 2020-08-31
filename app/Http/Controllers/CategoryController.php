@@ -90,20 +90,6 @@ class CategoryController extends Controller
         return view('categories.show', compact('category'));
     }
 
-    public function showCompletedTasks (Request $request, $id)
-    {
-        // $category = Category::with([
-        //     'tasks' => function ($query) {
-        //         $query->where('state', 2);
-        //     }
-        // ])->findOrFail($id);
-        
-        $category = Category::where('user_id', auth()->id())->with('completedTasks')
-            ->findOrFail($id);
-
-        return view('categories.show-completed', compact('category'));
-    }
-
     /**
      * Show the form for editing the specified resource.
      *
