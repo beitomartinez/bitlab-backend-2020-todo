@@ -1,10 +1,11 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::view('/', 'home');
-Route::view('home', 'home')->name('home');
+Route::get('/', HomeController::class);
+Route::get('home', HomeController::class)->name('home');
 
 Route::middleware('auth')->group(
     function () {

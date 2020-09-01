@@ -105,17 +105,6 @@ class TaskController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -124,17 +113,21 @@ class TaskController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+        $task = Task::where([
+            ['created_by', auth()->id()],
+            ['state', '<', 2]
+        ])->findOrFail($id);
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        if ($task->state == 0) {
+            $task->state = 1;
+        } else {
+            $task->state = 2;
+            $task->completed_at = now();
+        }
+
+        $task->save();
+
+        $request->session()->flash('task_updated', true);
+        return redirect()->route('tasks.show', $id);
     }
 }
