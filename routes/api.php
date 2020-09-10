@@ -1,19 +1,30 @@
 <?php
 
+use App\Http\Controllers\Api\{CategoryController, TaskController};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
+Route::prefix('categories')->group(
+    function () {
+        Route::get('', [CategoryController::class, 'index']);
+        Route::prefix('{category}')->group(
+            function () {
+                Route::get('', [CategoryController::class, 'show']);
+                Route::put('', [CategoryController::class, 'update']);
+            }
+        );
+    }
+);
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
-});
+Route::prefix('tasks')->group(
+    function () {
+        Route::get('', [TaskController::class, 'index']);
+        Route::prefix('{task}')->group(
+            function () {
+                Route::get('', [TaskController::class, 'show']);
+                Route::get('with-category', [TaskController::class, 'showWithCategory']);
+                Route::put('', [TaskController::class, 'update']);
+            }
+        );
+    }
+);
